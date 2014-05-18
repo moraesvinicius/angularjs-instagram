@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS - Instagram API</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+</head>
+<body>
+    
+    <article ng-app="appInstagram" ng-controller="contrllInstagram">
+        <h1>AngularJS - Instagram API</h1>
+        
+        <nav>
+            <!-- These two buttons switch the layout varaible, which causes the correct UL to be shown. -->
+            <a class="list-icon" ng-class="{vinicius: isLayout('list')}" ng-click="setLayout('list')"></a>
+            <a class="grid-icon" ng-class="{moraes: isLayout('grid')}" ng-click="setLayout('grid')"></a>
+        </nav>
+
+        <!-- We have two layouts. We choose which one to show depending on the "layout" binding -->
+        <ul ng-show="isLayout('grid')" class="grid">
+            <!-- A view with big photos and no text -->
+            <li ng-repeat="p in pics">
+                <a href="{{p.link}}" target="_blank"><img ng-src="{{p.images.low_resolution.url}}" /></a>
+            </li>
+        </ul>
+
+        <ul ng-show="isLayout('list')" class="list">
+            <!-- A compact view smaller photos and titles -->
+            <li ng-repeat="p in pics">
+                <a href="{{p.link}}" target="_blank"><img ng-src="{{p.images.thumbnail.url}}" /></a>
+
+                <span class="details">
+                    <span class="user">
+                        <img ng-src="{{p.caption.from.profile_picture}}" alt="{{p.caption.from.user}}" />{{p.caption.from.user}}
+                    </span>
+                    <span class="time">{{p.created_time}}</span>
+                </span>
+
+                <span class="description">{{p.caption.text}}</span>
+                <strong class="tags">Fotógrafo: <span>{{p.tags}}</span></strong>
+                <span class="likes">{{p.likes.count}} likes</span>	
+            </li>
+        </ul>
+
+
+    </article>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>    
+    <script src="app.js"></script>
+
+</body>
+</html>
